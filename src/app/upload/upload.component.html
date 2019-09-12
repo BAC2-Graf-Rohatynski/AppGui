@@ -1,0 +1,46 @@
+<div class="bg-light" style="max-width: 300px">
+  <mat-toolbar>
+    <mat-toolbar-row class="navbar-expand-lg bg-dark ">
+      <div class="float-left" style="width: 90%;">
+        <a class="navbar-brand" href="#">
+          <span class="text-warning" style="font-size: 25px;">Image Upload</span>
+        </a>
+      </div>
+      <div>
+        <button class="btn btn-info  bg-dark border-0" (click)="saveUploadedImage()">
+          <mat-icon>save</mat-icon>
+          <span>Confirm</span>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div style="height: 170px; width: 240px; margin-top: 10px" class="border">
+    <img *ngIf="getFileExtension(imageToHandle.base64String)" src="{{imageUrlFirst+getFileExtension(imageToHandle.base64String)+
+            imageUrlSecond+imageToHandle.base64String}}" height="170px" width="240px;" placeholder="Choose a picture">
+  </div>
+  <mat-form-field>
+    <mat-label>Choose Image</mat-label>
+    <mat-select onclick="document.getElementById('uploadFile').click();">
+    </mat-select>
+    <input type="file" style="display:none;" id="uploadFile" class="bg-dark navbar_button" name="file"
+           (change)="onSelectFile($event)"/>
+  </mat-form-field>
+</div>
+<div *ngIf="imageToHandle" style="margin-top: 10px;">
+  <h2>Tag Image</h2>
+  <mat-form-field class="tag-chip-list">
+    <input placeholder="New Tag..." class="form-input"
+           [matChipInputFor]="chipList"
+           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           [matChipInputAddOnBlur]="addOnBlur"
+           (matChipInputTokenEnd)="add($event)"
+           style="margin-top: 10px;">
+    <mat-chip-list #chipList aria-label="Fruit selection"  style="margin-top: 10px;">
+      <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                [removable]="removable" (removed)="remove(tag)">
+        {{tag.name}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </mat-form-field>
+</div>

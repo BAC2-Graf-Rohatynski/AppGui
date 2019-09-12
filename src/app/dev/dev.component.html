@@ -1,0 +1,230 @@
+<div class="frame">
+  <div>
+    <h1>Development Testpage</h1>
+  </div>
+  <mat-grid-list [cols]="3">
+    <mat-grid-tile>
+      <div class="modules">
+        <h2>Basic Functions</h2>
+        <form action="ErrorMessage" method="post" >
+          <input type="submit" value="Error Message">
+          <input name="code" type="text" value="Enter Error Code (Currently available: 301,302)">
+        </form>
+
+        <form action="/TestDB" method="post" >
+          <input type="button" onclick="location.href='/TestDB'" value='Test Database Connection'>
+        </form>
+
+        <form action="stopCommandThread" method="post" >
+          <input type="button" onclick="location.href='/stopCommandThread'" value='Stop Threads'>
+        </form>
+
+        <form action="error404" method="post" >
+          <input type="button" onclick="location.href='/error404'" value='Call Error 404 Page'>
+        </form>
+
+        <form action="error" method="post" >
+          <input type="button" onclick="location.href='error'" value='Call Error Page'>
+        </form>
+
+        <form action="getActiveLicense" method="post" >
+          <input type="button" onclick="location.href='/'" value='Call Index Page'>
+        </form>
+
+        <form action="testXML" method="post" >
+          <input type="button" onclick="location.href='/TestXML'" value='Test XML'>
+        </form>
+
+        <form action="testJson" method="post" >
+          <input type="button" onclick="location.href='/TestJson'" value='Test Json'>
+        </form>
+
+        <h2>
+          <p>Error Message:</p>
+          <br>
+          <span th:text="${errormessage}"></span>
+          <br>
+          <p>Error Response</p>
+          <br>
+          <span th:text="${errorresponse}"></span>
+        </h2>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="modules">
+        <h2>Command Handler</h2>
+        <form action="CommandRead" method="post" >
+          <input type="button" onclick="location.href='http://localhost:8080/CommandRead'" value="Send 'Read' Command">
+        </form>
+
+        <form action="CommandWrite" method="post" >
+          <input type="button" onclick="location.href='/CommandWrite'" value="Send 'Write' Command">
+        </form>
+
+        <form action="CommandNew" method="post" >
+          <input type="button" onclick="location.href='/CommandNew'" value="Send 'New' Command">
+        </form>
+
+        <form action="CommandChangeShow" method="post" >
+          <input type="submit" value="Send 'CommandChangeShow' Command">
+          <input name="show" type="text" value="Enter Show name (A,B,C,...)">
+        </form>
+
+        <form action="CommandChangeLanguage" method="post" >
+          <input type="submit" value="Send 'CommandChangeLanguage' Command">
+          <input name="language" type="text" value="Enter language">
+        </form>
+
+        <form action="CommandGetAllSlaves" method="post" >
+          <input type="button" onclick="location.href=getUrl()" value="Send 'GetAllSlaves' Command">
+        </form>
+
+        <form action="CommandRemoveDatabase" method="post" >
+          <input type="submit" value="Send 'CommandRemoveDatabase' Command">
+          <input name="database" type="text" value="Enter DB name">
+        </form>
+
+        <form action="CommandAddDatabase" method="post" >
+          <input type="submit" value="Send 'CommandAddDatabase' Command">
+          <input name="database" type="text" value="Enter DB name">
+        </form>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="modules">
+      <h2>License Handler</h2>
+      <form action="getAllLicenses" method="post" >
+        <input type="button" onclick="location.href='/getAllLicenses'" value='Get All Licenses'>
+      </form>
+      <form action="addLicense" method="post" >
+        <input type="submit" value="Add License">
+        <input name="id" type="text" value="Enter ID">
+        <input name="type" type="text" value="Enter License Type">
+        <input name="creationDate" type="text" value="2019/01/01 <-- Modify Creation Date">
+        <input name="expirationDate" type="text" value="2019/01/01 <-- Modify Expiration Date">
+      </form>
+
+      <form action="activateLicense" method="post" >
+        <input type="submit" value="Activate License">
+        <input name="id" type="text" value="Enter ID">
+      </form>
+
+      <form action="deactivateLicense" method="post" >
+        <input type="submit" value="Deactivate License">
+        <input name="id" type="text" value="Enter ID">
+      </form>
+
+      <form action="lockLicense" method="post" >
+        <input type="submit" value="Lock License">
+        <input name="id" type="text" value="Enter ID">
+      </form>
+
+      <form action="unlockLicense" method="post" >
+        <input type="submit" value="Unlock License">
+        <input name="id" type="text" value="Enter ID">
+      </form>
+
+      <form action="deleteLicense" method="post" >
+        <input type="submit" value="Delete License">
+        <input name="id" type="text" value="Enter ID">
+      </form>
+
+      <form action="extendExpirationDate" method="post" >
+        <input type="submit" value="Extend License Expiration Date">
+        <input name="id" type="text" value="Enter ID">
+        <input name="expirationDate" type="text" value="2020/01/01">
+      </form>
+
+      <form action="getActiveLicense" method="post" >
+        <input type="button" onclick="location.href='/getActiveLicense'" value='Get Active Licenses'>
+      </form>
+
+      <form action="sendLanguage" method="post" >
+        <input type="submit" value="Send Language">
+        <input name="language" type="text" value="Enter ID">
+      </form>
+
+      <form action="LicenseImport" method="post" >
+        <input type="submit" value="Import License">
+        <input name="filepath" type="text" value="Enter File Path">
+      </form>
+
+
+      <h3>
+        <p>License Message:</p>
+        <br>
+        <span th:text="${licensemessage}"></span>
+        <br>
+        <p>License Response</p>
+        <span th:text="${licenseresponse}"></span>
+      </h3>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3">
+      <div class="slaveList">
+        <h3>
+          <p>Command Message: </p>
+          <br>
+          <span th:text="${commandmessage}"></span>
+          <br>
+          <p>Command Response:</p>
+          <span th:text="${commandresponse}"></span>
+        </h3>
+
+
+        <table>
+          <tr>
+            <h2>Slave Count:  <span th:text="${slavecount}"></span></h2>
+            <br>
+            <h2>Slaves: </h2>
+          </tr>
+          <thead>
+          <tr>
+            <th><h3>SsidA</h3></th>
+            <th><h3>SsidB</h3></th>
+            <th><h3>SsidC</h3></th>
+            <th><h3>SsidD</h3></th>
+            <th><h3>SsidE</h3></th>
+            <th><h3>Mac Address</h3></th>
+            <th><h3>IP Address</h3></th>
+            <th><h3>Image Hash</h3></th>
+            <th><h3>Status</h3></th>
+            <th><h3>Device</h3></th>
+            <th><h3>Manufacturer</h3></th>
+            <th><h3>Universe</h3></th>
+            <th><h3>DMX Start Address</h3></th>
+            <th><h3>DMX End Address</h3></th>
+            <th><h3>DMX Channels</h3></th>
+            <th><h3>HLS</h3></th>
+            <th><h3>Timestamp</h3></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let slave of myJSONArray">
+            <td>{{slave.ssidA}}</td>
+            <td>{{slave.ssidB}}</td>
+            <td>{{slave.ssidC}}</td>
+            <td>{{slave.ssidD}}</td>
+            <td>{{slave.ssidE}}</td>
+            <td>{{slave.macAddress}}</td>
+            <td>{{slave.ipAddress}}</td>
+            <td>{{slave.imagesHash}}</td>
+            <td>{{slave.status}}</td>
+            <td>{{slave.device}}</td>
+            <td>{{slave.manufacturer}}</td>
+            <td>{{slave.univers}}</td>
+            <td>{{slave.startDmxAddress}}</td>
+            <td>{{slave.endDmxAddress}}</td>
+            <td>{{slave.dmxChannels}}</td>
+            <td>{{slave.hls}}</td>
+            <td>{{slave.timestamp}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+
+

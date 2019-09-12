@@ -1,0 +1,128 @@
+<div class="bg-light content  border-dark">
+  <mat-toolbar>
+    <mat-toolbar-row class="navbar-expand-lg bg-dark">
+      <div class="float-left" style="width: 90%;">
+        <a class="navbar-brand" href="#">
+          <span class="text-warning" style="font-size: 25px;">Gobo Creator</span>
+        </a>
+      </div>
+      <div>
+        <button class="btn btn-info bg-dark border-0" (click)="resetInputFields()">
+          <mat-icon>add</mat-icon>
+          <span> New Gobo</span>
+        </button>
+        <button class="btn btn-info bg-dark border-0" (click)="createGobo()">
+          <mat-icon>save</mat-icon>
+          <span> Save</span>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div>
+    <div class="float-left" style="width:300px;">
+      <mat-list>
+        <mat-list-item>
+          <div style="height: 150px; width: 250px" class="border">
+            <img src="data:image/jpeg;base64,{{gobo.base64String}}" height="150px" width="250spx;"
+                 *ngIf="gobo.base64String" placeholder="Choose a picture">
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-form-field>
+            <mat-label>Choose Image</mat-label>
+            <mat-select onClick="document.getElementById('uploadFile').click();">
+            </mat-select>
+            <input type="file" style="display:none;" id="uploadFile" class="bg-dark navbar_button" name="file"
+                   (change)="onSelectFile($event)"/>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="right">
+      <mat-list>
+        <mat-list-item>
+          <label>Color</label>
+          <input matInput type="text"
+                 id="name"
+                 class="form-control form-input"
+                 name="name"
+                 placeholder=""
+                 [(ngModel)]="gobo.color"
+                 #name="ngModel"
+                 required/>
+          <!--
+          <div *ngIf="f.submitted && model.invalid" class="invalid-input"></div>
+          <div *ngIf="model.errors?.required">Field is required</div>
+          -->
+        </mat-list-item>
+        <mat-list-item>
+          <label>Hex Code</label>
+          <input matInput type="text"
+                 maxlength="8"
+                 id="model"
+                 class="form-control form-input"
+                 name="model"
+                 placeholder=""
+                 [(ngModel)]="gobo.hexCode"
+                 #name="ngModel"
+                 required/>
+          <!--
+          <div *ngIf="f.submitted && model.invalid" class="invalid-input"></div>
+          <div *ngIf="model.errors?.required">Field is required</div>
+          -->
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <!--
+  <button type="submit" class="btn btn-info pull-right">
+    <i class="fa fa-envelope-o"></i>
+    <span> Save</span>
+  </button>
+  -->
+  <div class="float-none"></div>
+  <div class="datatable">
+    <h3 class="float-left">Existing Gobos</h3>
+    <mat-form-field class="float-right">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <div>
+      <table mat-table class="datatable bg-light mat-elevation-z8" [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell class="small-table-field" *matHeaderCellDef mat-sort-header> ID</th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="color">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Color</th>
+          <td mat-cell *matCellDef="let element"> {{element.color}} </td>
+        </ng-container>
+
+        <!-- Hex Code Column -->
+        <ng-container matColumnDef="hexCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Hex Code</th>
+          <td mat-cell *matCellDef="let element"> {{element.hexCode}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell class="small-table-field " *matHeaderCellDef> Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button class="material-icons" (click)="deleteGobo(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button class="material-icons" (click)="editGobo(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </table>
+      <mat-paginator class="bg-light" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>

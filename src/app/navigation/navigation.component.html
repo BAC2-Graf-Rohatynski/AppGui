@@ -1,0 +1,34 @@
+<mat-toolbar class="navbar-expand-lg navbar-dark bg-dark">
+  <mat-toolbar-row>
+    <button mat-icon-button  [class.active]="toggleActive" (click)="toggleSidenav()">
+      <mat-icon style="font-size: 40px;">menu</mat-icon>
+    </button>
+      <ul fxLayout fxLayoutGap="20px">
+        <li>
+          <a class="navbar-brand" href="#">
+            <i class="fa fa-lightbulb-o text-warning"></i>
+            <span class="text-warning">{{title}}</span>
+          </a>
+        </li>
+        <li>
+            <button mat-button  class="navbar_button bg-dark" routerLink="editor" >Editor</button>
+        </li>
+        <li>
+          <button mat-button  class="navbar_button bg-dark" routerLink="configtool" >Config Tool</button>
+        </li>
+        <li>
+          <button mat-button  class="navbar_button bg-dark" routerLink="dev" >Dev Tool</button>
+        </li>
+      </ul>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+
+
+
+
+
+
+
+

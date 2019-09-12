@@ -1,0 +1,72 @@
+:host {
+  display: block;
+  width: 120vh;
+  height: 650px;
+  margin-top:20px;
+}
+
+h1 {
+  margin: 0;
+  padding: 1em;
+}
+
+.content{
+  height:100%;
+  width: 100%;
+  -webkit-box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  border-radius:12px;
+  margin: 10px;
+  padding: 10px;
+}
+table, tbody {
+  width: 100%;
+}
+
+.form-input{
+  width: 200px;
+  height: 25px;
+  background: white;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+}
+
+
+
+.mat-column-name {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  width: 80% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+
+.table {
+  display: table;   /* Allow the centering to work */
+  margin: 0 auto;
+}
+
+ul {
+  min-width: 696px;
+  list-style: none;
+  padding-top: 20px;
+}
+ul li {
+  display: inline;
+  margin: 10px;
+}
+
+.rightside{
+  position: absolute;
+  right: 10px;
+  top:15px;
+}

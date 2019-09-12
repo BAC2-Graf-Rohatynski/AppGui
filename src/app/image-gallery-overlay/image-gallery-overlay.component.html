@@ -1,0 +1,22 @@
+<div class="bg-light content border border-dark" >
+  <mat-toolbar class="navbar-expand-lg navbar-dark bg-dark sticky-top" style="border-radius: 5px;">
+    <mat-toolbar-row>
+      <ul fxLayout fxLayoutGap="20px">
+        <li>
+          <a class="navbar-brand" href="#">
+            <span class="text-warning" style="font-size: 25px;">Image Gallery</span>
+          </a>
+      </ul>
+      <div class="float-right">
+        <button  class="btn btn-info rightside bg-dark border-0" (click)="saveImage()" >
+          <i class="fa fa-envelope-o"></i>
+          <span> Save</span>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div style="padding-top:10px;">
+    <ngx-gallery [options]="galleryOptions" [images]="galleryImages" style="width: 100%;"></ngx-gallery>
+  </div>
+</div>
+

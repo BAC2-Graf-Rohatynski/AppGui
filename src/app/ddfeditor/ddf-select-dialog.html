@@ -1,0 +1,66 @@
+<mat-toolbar class="navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <mat-toolbar-row>
+    <ul fxLayout fxLayoutGap="20px">
+      <li>
+        <a class="navbar-brand" href="#">
+          <span class="text-warning" style="font-size: 25px;">DDF Creator</span>
+        </a>
+    </ul>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-list>
+  <mat-list-item>
+    <label>Device Type</label>
+    <mat-form-field>
+      <mat-label>Choose Device Type</mat-label>
+      <mat-select name="manufcaturer"  [(ngModel)]="data.selectedDeviceType" >
+          <mat-option *ngFor="let deviceType of data.deviceTypes" [value]="deviceType">
+            {{deviceType.name}}
+          </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item>
+    <label>Manufacturer</label>
+    <mat-form-field>
+      <mat-label>Choose Manufacturer</mat-label>
+      <mat-select name="manufacturer" (click)="openManufacturerSnackbar()" [(ngModel)]="data.selectedManufacturer" >
+        <ng-container *ngIf="data.selectedDeviceType != null">
+        <mat-option *ngFor="let manufacturer of data.manufacturers" [value]="manufacturer">
+          {{manufacturer.name}}
+        </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item>
+    <label>Model</label>
+    <mat-form-field>
+      <mat-label>Choose Model</mat-label>
+      <mat-select name="model" (click)="openModelSnackbar()" [(ngModel)]="data.selectedModel" >
+        <ng-container *ngIf="data.selectedDeviceType != null">
+        <mat-option *ngFor="let model of data.models" [value]="model">
+          {{model.model}}
+        </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item>
+    <label>Standard Device</label>
+    <mat-form-field>
+      <mat-label>Choose Standard Device</mat-label>
+      <mat-select name="type" (click)="openStandardDeviceSnackbar()" [(ngModel)]="data.selectedStandardDevice" >
+        <ng-container *ngIf="data.selectedDeviceType != null">
+        <mat-option *ngFor="let standardDevice of data.selectedDeviceType.standardDevice" [value]="standardDevice">
+          {{standardDevice}}
+        </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </mat-list-item>
+</mat-list>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

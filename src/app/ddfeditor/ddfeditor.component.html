@@ -1,0 +1,109 @@
+<mat-sidenav-container [hasBackdrop]="false">
+  <mat-sidenav #sidenav mode="side" opened class="bg-light sticky-top">
+    <div class="sidenav">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="border-bottom border-bg-dark" >
+          <button mat-button (click)="treeFunctions(node)">
+            <mat-icon>{{node.icon}}</mat-icon>
+            {{node.name}}
+          </button>
+
+        </mat-tree-node>
+
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding class="border-bottom border-bg-dark">
+          <button mat-icon-button matTreeNodeToggle
+                  [attr.aria-label]="'toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          {{node.name}}
+        </mat-tree-node>
+      </mat-tree>
+    </div>
+    <div>
+      <button mat-raised-button
+              class="example-add-tab-button"
+              (click)="openImageGalleryDialog()">
+        Add new tab
+      </button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-tab-group id="tab-group" [selectedIndex]="selected.value"
+                   (selectedIndexChange)="selected.setValue($event)">
+      <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+
+          <ng-template mat-tab-label>
+            <label style="font-size: 18px; padding-top:10px;">{{tab.name}}</label>
+            <mat-icon class="float-right" (click)="closeTab(tab)">close</mat-icon>
+          </ng-template>
+
+        <ng-container *ngFor="let deviceType of deviceTypeService.deviceTypes">
+          <ng-container *ngIf="tab.name == deviceType.name">
+            <app-ddf-editor-content
+              [selectedDeviceType]="deviceType"
+              [selectedManufacturer]="manufacturer"
+              [selectedModel]="model"
+              [selectedStandardDevice]="standardDevice">
+            </app-ddf-editor-content>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="tab.name.toLowerCase() == 'ddf viewer'">
+          <app-ddf-viewer></app-ddf-viewer>
+        </ng-container>
+
+      </mat-tab>
+    </mat-tab-group>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<!--
+ <ng-material-multilevel-menu [configuration]='config' [items]='appitems' (ngClick)="selectedItem($event)">
+      </ng-material-multilevel-menu>
+
+<ul>
+  <li >
+    <h4 class="sidebar-heading">DDF Editor</h4>
+    <mat-divider></mat-divider>
+  </li>
+  <li>
+    <button mat-button  class="sidenav_button border border-light" [matMenuTriggerFor]="file" >File</button>
+    <mat-menu #file="matMenu">
+      <button mat-menu-item>New</button>
+      <button mat-menu-item>Edit</button>
+      <button mat-menu-item>Delete</button>
+    </mat-menu>
+    <mat-divider></mat-divider>
+  </li>
+  <li>
+    <button mat-button  class="sidenav_button" [matMenuTriggerFor]="menu" >Edit</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+    <mat-divider></mat-divider>
+  </li>
+  <li>
+    <button mat-button  class="sidenav_button" [matMenuTriggerFor]="menu" >Device</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+    <mat-divider></mat-divider>
+  </li>
+  <li>
+    <button mat-button  class="sidenav_button" [matMenuTriggerFor]="menu" >Extras</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+    <mat-divider></mat-divider>
+  </li>
+</ul>
+
+-->

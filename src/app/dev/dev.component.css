@@ -1,0 +1,52 @@
+body{
+  background-color: white;
+}
+
+h1{
+  text-align: center;
+}
+
+form{
+  margin-bottom: 10px;
+}
+
+input{
+  width: 200px;
+}
+td{
+
+  border-right: 1px solid black;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+th{
+  padding: 5px;
+  border-right: 1px solid black;
+}
+
+#frame{
+  width:100%;
+}
+
+.modules{
+  float:left;
+  width:100%;
+  border: 2px solid #4169e1;
+  -webkit-box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  border-radius:12px;
+  padding: 10px;
+}
+
+.slaveList{
+  clear: left;
+  width:100%;
+  border: 2px solid #4169e1;
+  -webkit-box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 5px -0px rgba(0,0,0,0.3);
+  border-radius:12px;
+  padding: 10px;
+}

@@ -1,0 +1,91 @@
+<div class="bg-light border-dark sticky-top">
+  <mat-toolbar>
+    <mat-toolbar-row class="navbar-expand-lg bg-dark ">
+      <div class="float-left" style="width: 90%;">
+        <a class="navbar-brand" href="#">
+          <span class="text-warning" style="font-size: 25px;">Image Gallery</span>
+        </a>
+      </div>
+      <div>
+        <button class="btn btn-info  bg-dark border-0" (click)="deleteImages()">
+          <mat-icon>delete</mat-icon>
+          <span>delete selection</span>
+        </button>
+        <button class="btn btn-info bg-dark  border-0" (click)="upload()">
+          <mat-icon>add</mat-icon>
+          <span>Upload</span>
+        </button>
+        <button class="btn btn-info bg-dark  border-0" (click)="confirm()">
+          <mat-icon>save</mat-icon>
+          <span>Confirm Selection</span>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div class="row" style="margin:0px; padding-bottom: 10px; width:100%">
+    <div class="float-left" style="width: 70%;">
+      <mat-form-field style="margin: 20px;">
+        <mat-select [(ngModel)]="filters"
+                    disableOptionCentering class="table-select"
+                    (selectionChange)="setFilterBy(filters)"
+                    (click)="getImages()" multiple>
+          <mat-option (click)="setFilterBy('all')"
+                      [value]="filterBy">
+            <span>All Images</span>
+          </mat-option>
+          <mat-option *ngFor="let tag of tags"
+                      [value]="tag">
+            <span>{{tag}}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <label>Active Filters: </label>
+    </div>
+    <!--
+    <div>
+      <div class="float-left" style=" padding-top:10px;">
+      <div style="height: 85px; width: 120px;" class="border">
+        <img *ngIf="getFileExtension(imageToUpload.base64String)" src="{{imageUrlFirst+getFileExtension(imageToUpload.base64String)+
+          imageUrlSecond+imageToUpload.base64String}}" height="85px" width="120px;" placeholder="Choose a picture">
+      </div>
+      <mat-form-field>
+        <mat-label>Choose Image</mat-label>
+        <mat-select onclick="document.getElementById('uploadFile').click();">
+        </mat-select>
+        <input type="file" style="display:none;" id="uploadFile" class="bg-dark navbar_button" name="file"
+               (change)="onSelectFile($event)"/>
+      </mat-form-field>
+      </div>
+      <div class="float-right" style="align-items: center; display: flex; justify-content: center;">
+      <button matButton class="btn bg-dark btn-info border-0"
+              style="vertical-align: center; margin: 10px;" (click)="saveUploadedImage()">Confirm Upload
+      </button>
+      </div>
+    </div>
+    -->
+  </div>
+</div>
+<div  class="gallery bg-light" style="width: 100%;">
+  <div class="row">
+    <ul style="width: 100%; height:100%; margin-top: 10px" *ngIf="allImages.length != 0">
+      <li class="container" *ngFor="let image of (allImages | filterimages:filterBy)">
+        <img *ngIf="getFileExtension(image.base64String)"
+              src="{{imageUrlFirst+getFileExtension(image.base64String)+imageUrlSecond+image.base64String}}"
+             (click)="clickEvent(image)"
+             [ngStyle]="{'border': image.selected === true ? '2px solid red' : 'none'}"
+             [ngClass]="selected ? 'true' : 'false'">
+        <div class="positioner">
+          <div class="iconContainer">
+            <button class="iconButton float-left bg-dark btn-info btn" (click)="editImage(image)">
+              <mat-icon class="icon">edit</mat-icon>
+            </button>
+            <button class="iconButton bg-dark btn-info btn" (click)="deleteImage(image)">
+              <mat-icon class="icon">delete</mat-icon>
+            </button>
+          </div>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

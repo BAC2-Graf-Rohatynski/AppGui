@@ -1,0 +1,34 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height:100%;
+}
+
+.selector{
+  width: 200px;
+}
+
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.form-control{
+  height: 25px;
+}
+
+input{
+  height: 25px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}

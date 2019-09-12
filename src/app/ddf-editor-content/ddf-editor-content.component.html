@@ -1,0 +1,648 @@
+<div class="content" xmlns="http://www.w3.org/1999/html" *ngIf="selectedDeviceType != null">
+  <div>
+    <div style="height:300px;">
+      <div class="float-left" style="height:100%; width:400px;">
+        <div>
+          <div style="height: 250px; width: 350px" class="border">
+            <img *ngIf="getFileExtension(image.base64String)"
+                 width="350px;"
+                 height="250px;"
+                 src="{{imageUrlFirst+getFileExtension(image.base64String)+imageUrlSecond+image.base64String}}"
+                 placeholder="Choose a picture">
+          </div>
+          <mat-form-field>
+            <mat-label>Choose Image</mat-label>
+            <mat-select (click)="openImageGalleryDialog()">
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <div style="height:200px; width:33%;" class="float-left">
+          <mat-list>
+            <!--
+            <mat-list-item>
+              <label>Type</label>
+              <mat-form-field>
+                <mat-label>Choose Type</mat-label>
+                <mat-select name="type" [(ngModel)]="selectedDeviceType" (selectionChange)="setType($event)">
+
+                  <mat-option>
+                    <ngx-mat-select-search [formControl]="filteredDeviceTypeCtrl" #deviceTypeSelect></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option>None</mat-option>
+
+                  <mat-option *ngFor="let deviceType of deviceTypes" [value]="deviceType">
+                    {{deviceType.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div *ngIf="f.submitted && model.invalid" class="invalid-input"></div>
+              <div *ngIf="model.errors?.required">Field is required</div>
+
+            </mat-list-item>
+            -->
+            <mat-list-item>
+              <label>Model</label>
+              <mat-form-field>
+                <mat-label>Choose Model</mat-label>
+                <mat-select (click)="modelClick()" [(ngModel)]="ddfViewModel.model" name="model" #name="ngModel">
+                  <!--
+                  <mat-option>
+                    <ngx-mat-select-search [formControl]="filteredModelCtrl" #modelSelect></ngx-mat-select-search>
+                  </mat-option>
+                  -->
+                  <mat-option (click)="showModel()">
+                    <mat-icon>add</mat-icon>
+                    Add Model
+                  </mat-option>
+                  <div *ngIf="selectedDeviceType != null">
+                    <mat-option *ngFor="let model of models" [value]="model.model">
+                      <span>{{model.model}}</span>
+                    </mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item>
+              <label>Manufacturer</label>
+              <mat-form-field>
+                <mat-select (click)="manufacturerClick()" disableOptionCentering [(ngModel)]="ddfViewModel.manufacturer"
+                            name="manufacturer" #name="ngModel" disabled>
+                  <ng-container *ngIf="selectedDeviceType != null">
+
+                    <mat-option (click)="showManufacturer()">
+                      <mat-icon>add</mat-icon>
+                      Add Manufacturer
+                    </mat-option>
+                    <!-- Filter braucht hier eine async Pipe -->
+                    <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.name">
+                      <span>{{manufacturer.name}}</span>
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item>
+              <label>Standard Device</label>
+              <label><span>{{ddfViewModel.standardDevice}}</span></label>
+              <!--
+              <mat-form-field>
+                <mat-label>Choose Standard Device</mat-label>
+                <mat-select disableOptionCentering [(ngModel)]="ddfViewModel.standardDevice" name="standardDevice"
+                            #name="ngModel">
+                   Filter braucht hier eine async Pipe
+                  <mat-option *ngFor="let device of selectedDeviceType.standardDevice" [value]="device">
+                    {{device}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label class="longlabelname">Version</label>
+              <label>{{ddfViewModel.version}}</label>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div style="height: 200px" class="float-left">
+          <mat-list>
+            <mat-list-item>
+              <label class="longlabelname">Author</label>
+              <input matInput type="text"
+                     id="author"
+                     class="form-control form-input"
+                     name="author"
+                     placeholder=""
+                     [(ngModel)]="ddfViewModel.author"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && author.invalid" class="invanlid-input"></div>
+              <div *ngIf="author.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label class="longlabelname">Power Consumption</label>
+              <input matInput type="number"
+                     maxlength="8"
+                     min="0"
+                     max="120"
+                     id="powerConsumption"
+                     class="form-control form-input"
+                     name="powerConsumption"
+                     placeholder=""
+                     [(ngModel)]="ddfViewModel.powerConsumption"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && channelCount.invalid" class="invalid-input"></div>
+              <div *ngIf="channelCount.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label class="longlabelname">Ressource Consumption</label>
+              <input matInput type="text"
+                     id="ressourceConsumption"
+                     class="form-control form-input"
+                     name="ressourceConsumption"
+                     placeholder=""
+                     [(ngModel)]="ddfViewModel.ressourceConsumption"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && model.invalid" class="invalid-input"></div>
+              <div *ngIf="model.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label class="longlabelname">Pan/Tilt Invert</label>
+              <mat-checkbox [(ngModel)]="ddfViewModel.panTiltInvert"></mat-checkbox>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <button type="submit" class="btn btn-info border-0pull-right float-right bg-dark" (click)="createDDF()">
+          <mat-icon>save</mat-icon>
+          <span> Create DDF</span>
+        </button>
+      </div>
+      <div>
+        <div class="float-left" style="height:100px;">
+          <mat-list>
+            <mat-list-item>
+              <label>Comment</label>
+              <textarea matInput type="text"
+                        id="comment"
+                        class="form-control form-input"
+                        name="comment"
+                        placeholder=""
+                        [(ngModel)]="ddfViewModel.comment"
+                        #name="ngModel"
+                        style="height:100px; width: 800px;"
+                        required>
+            </textarea>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+    <div class="float-none"></div>
+    <div>
+      <div class="function_selector">
+        <mat-form-field class="float-right">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        <table mat-table [dataSource]="datasource" matSort class="modeltable bg-light">
+
+          <!-- Checked Column
+          <ng-container matColumnDef="checked" id="groupSelect">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="dropdownFied"> Check </th>
+            <td mat-cell *matCellDef="let element" class="dropdownFied">
+                <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+            </td>
+          </ng-container>
+          -->
+
+          <!-- Group Column -->
+          <ng-container matColumnDef="group" id="groupSelect">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="dropdownFied"> Group</th>
+            <td mat-cell *matCellDef="let element" class="dropdownFied">
+              <mat-form-field class="table-select">
+                <mat-select [(value)]="element.mainGroup" disableOptionCentering class="table-select"
+                            (selectionChange)="setEffects()">
+                  <mat-option *ngFor="let group of selectedDeviceType.groups | keyvalue " [value]="group.key">
+                    <span *ngIf="group.key != null || group.key != ''">{{group.key}}</span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Subgroup Column -->
+          <ng-container matColumnDef="subgroup">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="dropdownFied"> Subgroup</th>
+            <td mat-cell *matCellDef="let element" class="dropdownFied" class="dropdownFied">
+              <mat-form-field class="table-select">
+                <mat-select [(value)]="element.subgroup" disableOptionCentering class="table-select"
+                            (selectionChange)="setEffects()">
+                  <mat-option *ngFor="let group of selectedDeviceType.groups.get(checkGroup(element)) | keyvalue"
+                              [value]="group.key">
+                    <span *ngIf="group.key != null || group.key != ''">{{group.key}}</span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- DMX Column -->
+          <ng-container matColumnDef="dmx">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="dropdownFied"> DMX</th>
+            <td mat-cell *matCellDef="let element" class="dropdownFied">
+              <mat-form-field class="table-select">
+                <mat-select disableOptionCentering class="table-select" [(value)]="element.dmxChannels">
+                  <mat-select-filter [array]="deviceTypes"
+                                     (filteredReturn)="filteredDeviceTypes =$event"></mat-select-filter>
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let channel of numbers" [value]="channel">
+                    {{channel}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Mode Column -->
+          <ng-container matColumnDef="mode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="dropdownFied"> Mode</th>
+            <td mat-cell *matCellDef="let element" class="dropdownFied">
+              <mat-form-field class="table-select">
+                <mat-select disableOptionCentering class="table-select" [(value)]="element.mode"
+                            (selectionChange)="setEffects()">
+                  <mat-option
+                    *ngFor="let group of selectedDeviceType.groups.get(checkGroup(element)).get(checkSubgroup(element))  | keyvalue"
+                    [value]="group.value">
+                    <span *ngIf="group.value != null || group.value != ''">{{group.value}}</span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Unit Column -->
+          <ng-container matColumnDef="unit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="dropdownFied"> Unit</th>
+            <td mat-cell *matCellDef="let element" class="dropdownFied">
+              <mat-form-field class="table-select">
+                <mat-label>Choose Unit</mat-label>
+                <mat-select
+                  disableOptionCentering class="table-select" [(value)]="element.unit">
+
+                  <!-- Check Modes -->
+                  <ng-container *ngIf="element.mode.toLowerCase() == 'on' ||
+                    element.mode.toLowerCase() == 'off' ||
+                    element.mode.toLowerCase() == 'open' ||
+                    element.mode.toLowerCase() == 'close' ||
+                    element.mode.toLowerCase() == 'macro' ||
+                    element.mode.toLowerCase() == 'mod' ||
+                    element.mode.toLowerCase() == 'random' ||
+                    element.mode.toLowerCase() == 'color' ||
+                    element.mode.toLowerCase() == 'splitcolor';
+                    then unitBlock">
+                  </ng-container>
+                  <!-- Unit Select -->
+                  <ng-template #unitBlock>
+                    <mat-option *ngFor="let unit of units" [value]="unit">
+                      {{unit}}
+                    </mat-option>
+                  </ng-template>
+
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- DMX Value  Column -->
+          <ng-container matColumnDef="dmxVal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> DMX Value</th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.dmxVal"
+                     name="dmxVal + i.toString()" placeholder="{{element.dmxVal}}"/>
+            </td>
+          </ng-container>
+
+
+          <!-- DMX Real Value Column -->
+          <ng-container matColumnDef="realVal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> DMX Real</th>
+            <td mat-cell *matCellDef="let element">
+
+              <!-- Check Modes -->
+              <ng-container *ngIf="element.mode.toLowerCase() == 'on' ||
+                    element.mode.toLowerCase() == 'off' ||
+                    element.mode.toLowerCase() == 'open' ||
+                    element.mode.toLowerCase() == 'close' ||
+                    element.mode.toLowerCase() == 'macro' ||
+                    element.mode.toLowerCase() == 'mod' ||
+                    element.mode.toLowerCase() == 'random';
+                    then case1
+                    else elseIf1">
+              </ng-container>
+
+              <ng-template #case1>
+                <input matInput type="text" class="table-input" [(ngModel)]="element.dmxReal"
+                       name="dmxReal + i.toString()" placeholder="{{element.mode}}"/>
+              </ng-template>
+
+              <!-- else if -->
+              <ng-template #elseIf1 *ngIf="element.mode.toLowerCase() == 'linear';
+                    then case2
+                     else else1">
+              </ng-template>
+
+              <ng-template #case2>
+                <input matInput type="text" class="table-input" (ngModelChange)="checkRealValue(element)"
+                       [(ngModel)]="element.dmxReal"
+                       name="dmxReal + i.toString()" placeholder="{{element.dmxReal}}"
+                       [max]="255"/>
+              </ng-template>
+
+              <!-- else -->
+              <ng-template #else1 *ngIf="!element.mode">
+                <input matInput type="text" class="table-input" [(ngModel)]="element.dmxReal"
+                       name="dmxReal + i.toString()" placeholder="{{element.dmxReal}}"
+                       [disabled]="true"/>
+              </ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Gobo Column -->
+          <ng-container matColumnDef="goboVal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Gobo</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="table-select">
+                <mat-label>Choose Gobo</mat-label>
+                <mat-select (click)="getGobos()"
+                            disableOptionCentering class="table-select" [(value)]="element.gobo">
+
+                  <!-- Check Modes -->
+                  <ng-container *ngIf="element.mode.toLowerCase() == 'gobo';
+                    then case1">
+                  </ng-container>
+
+                  <!-- Gobo Select -->
+                  <ng-template #case1>
+                    <mat-option *ngFor="let gobo of gobos" [value]="gobo.hexCode">
+                      {{gobo.color}}
+                    </mat-option>
+                  </ng-template>
+
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="color">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Color</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="table-select">
+                <mat-label>Choose Color</mat-label>
+                <mat-select disableOptionCentering class="table-select" [(value)]="element.color" multiple>
+
+                  <!-- Check Modes -->
+                  <ng-container *ngIf="element.mode.toLowerCase() == 'color' ||
+                element.mode.toLowerCase() == 'splitcolor';
+                    then case1">
+                  </ng-container>
+
+                  <!-- Color Select -->
+                  <ng-template #case1>
+                    <mat-option *ngFor="let color of colors" [value]="color.name">
+                      {{color.name}}
+                    </mat-option>
+                  </ng-template>
+
+                </mat-select>
+
+                <!--
+                <ng-template *ngIf="element.mode.toLowerCase() == 'splitcolor'
+                      then case1
+                      else elseIf1">
+                </ng-template>
+
+                <ng-template #case1>
+                  <mat-form-field class="table-select">
+                    <mat-label>Choose Color</mat-label>
+                    <mat-select
+                      disableOptionCentering class="table-select" [(value)]="element.dmxReal" multiple>
+
+
+                      <ng-container *ngIf="element.mode.toLowerCase() == 'gobo';
+                      then case1">
+                      </ng-container>
+
+
+                      <ng-template #case1>
+                        <mat-option *ngFor="let color of colors" [value]="color.name">
+                          {{color.name}}
+                        </mat-option>
+                      </ng-template>
+
+                    </mat-select>
+                  </mat-form-field>
+                </ng-template>
+
+                <ng-template #elseIf1 *ngIf="element.mode.toLowerCase() == 'color'
+                      then case2
+                      ">
+                </ng-template>
+
+                <ng-template #case2>
+                  <mat-form-field class="table-select">
+                    <mat-label>Choose Color</mat-label>
+                    <mat-select
+                      disableOptionCentering class="table-select" [(value)]="element.dmxReal">
+                                            <mat-option *ngFor="let color of colors" [value]="color.name">
+                          {{color.name}}
+                        </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ng-template>
+
+                <ng-template #else1>
+                  <mat-form-field class="table-select">
+                    <mat-label>Choose Color</mat-label>
+                    <mat-select
+                      disableOptionCentering class="table-select" [(value)]="element.dmxReal">
+                    </mat-select>
+                  </mat-form-field>
+                </ng-template>
+              -->
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Value id Column -->
+          <ng-container matColumnDef="valID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Value id</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.valueID"
+                     name="vaueID + i.toString()" value='{{element.valID}}'/>
+            </td>
+          </ng-container>
+
+          <!-- Speed Column -->
+          <ng-container matColumnDef="speed">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Speed</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.speed"
+                     name="speed + i.toString()"
+                     placeholder="{{element.speed}}"/>
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="hlVal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> HL Value</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.hlVal"
+                     name="hlVal + i.toString()"
+                     placeholder="{{element.hlVal}}"/>
+            </td>
+          </ng-container>
+
+          <!-- HL Sport Value Column -->
+          <ng-container matColumnDef="hlValSpot">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> HL Value Spot</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.hlValSpot"
+                     name="hlValSpot + i.toString()" placeholder="{{element.hlValSpot}}"/>
+            </td>
+          </ng-container>
+
+          <!-- Energy Value Column -->
+          <ng-container matColumnDef="energyVal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Energy Value</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.energyVal"
+                     name="energyVal + i.toString()" placeholder="{{element.energyVal}}"/>
+            </td>
+          </ng-container>
+
+          <!-- Fuel Value Column -->
+          <ng-container matColumnDef="fuelVal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fuel Value</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.fuelVal"
+                     name="fuelVal + i.toString()" placeholder="{{element.fuelVal}}"/>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="small-table-field"> Action</th>
+            <td mat-cell *matCellDef="let element" class="small-table-field">
+              <button mat-icon-button class="material-icons" (click)="addElement()">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button class="material-icons" (click)="deleteElement(element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <!--
+        <mat-paginator class="bg-light" [pageSizeOptions]="[7]" showFirstLastButtons></mat-paginator>
+        -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+
+   Real value min Column
+          <ng-container matColumnDef="realMin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Real min</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.realMin"
+                     name="realMin + i.toString()" placeholder="{{element.realMin}}"/>
+            </td>
+          </ng-container>
+
+
+          Real Value Max Column
+          <ng-container matColumnDef="realMax">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Real max</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.realMax"
+                     name="realMax + i.toString()" placeholder="{{element.realMax}}"/>
+            </td>
+          </ng-container>
+
+
+
+         DMX min Column
+          <ng-container matColumnDef="dmxMin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> DMX min</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.dmxMin"
+                     name="dmxMin + i.toString()" placeholder="{{element.dmxMin}}"/>
+            </td>
+          </ng-container>
+
+          DMX max  Column
+          <ng-container matColumnDef="dmxMax">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> DMX max</th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput type="number" class="table-input" [(ngModel)]="element.dmxMax"
+                     name="dmxMax + i.toString()" placeholder="{{element.dmxMax}}"/>
+            </td>
+          </ng-container>
+
+
+
+<mat-select-filter [array]="deviceTypes" (filteredReturn)="filteredDeviceTypes =$event"></mat-select-filter>
+
+ <div>
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Channel</th>
+              <th>Function</th>
+              <th>Feature</th>
+              <th>DMX Value</th>
+              <th>Real World</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let field of fieldArray; let i = index">
+              <td>
+                <input [(ngModel)]="field.channel" class="form-control" type="text" name="{{field.channel}}" />
+              </td>
+              <td>
+                <input [(ngModel)]="field.function" class="form-control" type="text" name="{{field.function}}" />
+              </td>
+              <td>
+                <input [(ngModel)]="field.feature" class="form-control" type="text" name="{{field.feature}}" />
+              </td>
+              <td>
+                <input [(ngModel)]="field.dmxValue" class="form-control" type="text" name="{{field.dmxValue}}" />
+              </td>
+              <td>
+                <input [(ngModel)]="field.realValue" class="form-control" type="text" name="{{field.realValue}}" />
+              </td>
+              <td>
+                <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
+              </td>
+            </tr>
+            <tr style="height:2px;" >
+              <td>
+                <input  type="text" class="form-control"  id="newAttributechannel" [(ngModel)]="newAttribute.code" name="newAttributechannel" />
+              </td>
+              <td>
+                <input  type="text" class="form-control" id="newAttributefunction" [(ngModel)]="newAttribute.name" name="newAttributefunction" />
+              </td>
+              <td>
+                <input  type="text" class="form-control" id="newAttributefeature" [(ngModel)]="newAttribute.price" name="newAttributefeature" />
+              </td>
+              <td>
+                <input type="text" class="form-control" id="newAttributedmxValue" [(ngModel)]="newAttribute.price" name="newAttributedmxValue" />
+              </td>
+              <td>
+                <input  type="text" class="form-control" id="newAttributerealValue" [(ngModel)]="newAttribute.price" name="newAttributerealValue" />
+              </td>
+              <td>
+                <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+-->

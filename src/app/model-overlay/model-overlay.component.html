@@ -1,0 +1,313 @@
+<div class="bg-light content border border-dark">
+  <mat-toolbar class="navbar-expand-lg navbar-dark bg-dark sticky-top" style="border-radius: 5px;">
+    <mat-toolbar-row>
+      <ul fxLayout fxLayoutGap="20px">
+        <li>
+          <a class="navbar-brand" href="#">
+            <span class="text-warning" style="font-size: 25px;">Model Creator</span>
+          </a>
+      </ul>
+      <div class="float-right">
+        <button  class="btn btn-info rightside bg-dark border-0" (click)="createModel()" >
+          <i class="fa fa-envelope-o"></i>
+          <span> Save</span>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+    <form name="form" #f="ngForm" (ngSubmit)="createModel()" novalidate class="sticky-top">
+      <div>
+        <div style="height: 100%" class="float-left">
+          <mat-list>
+            <mat-list-item>
+              <label>Type</label>
+              <input matInput type="text"
+                     id="name"
+                     class="form-control form-input"
+                     name="name"
+                     placeholder=""
+                     [(ngModel)]="model.type"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && model.invalid" class="invalid-input"></div>
+              <div *ngIf="model.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label>Model</label>
+              <input matInput type="text"
+                     id="model"
+                     class="form-control form-input"
+                     name="model"
+                     placeholder=""
+                     [(ngModel)]="model.model"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && model.invalid" class="invalid-input"></div>
+              <div *ngIf="model.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label>Author</label>
+              <input matInput type="text"
+                     id="author"
+                     class="form-control form-input"
+                     name="author"
+                     placeholder=""
+                     [(ngModel)]="model.author"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && author.invalid" class="invalid-input"></div>
+              <div *ngIf="author.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label>Version</label>
+              <input matInput type="text"
+                     id="version"
+                     class="form-control form-input"
+                     name="version"
+                     placeholder=""
+                     [(ngModel)]="model.version"
+                     #name="ngModel"
+                     required/>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div style="height: 100%">
+          <mat-list>
+            <mat-list-item>
+              <label class="longlabelname">Manufacturer</label>
+              <input matInput type="text"
+                     id="manufacturer"
+                     class="form-control form-input"
+                     name="manufacturer"
+                     placeholder=""
+                     [(ngModel)]="model.manufacturer"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && model.invalid" class="invalid-input"></div>
+              <div *ngIf="model.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label class="longlabelname">Power Consumption</label>
+              <input matInput type="text"
+                     id="powerConsumption"
+                     class="form-control form-input"
+                     name="powerConsumption"
+                     placeholder=""
+                     [(ngModel)]="model.powerConsumption"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && channelCount.invalid" class="invalid-input"></div>
+              <div *ngIf="channelCount.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label class="longlabelname">Ressource Consumption</label>
+              <input matInput type="text"
+                     id="ressourceConsumption"
+                     class="form-control form-input"
+                     name="ressourceConsumption"
+                     placeholder=""
+                     [(ngModel)]="model.ressourceConsumption"
+                     #name="ngModel"
+                     required/>
+              <!--
+              <div *ngIf="f.submitted && model.invalid" class="invalid-input"></div>
+              <div *ngIf="model.errors?.required">Field is required</div>
+              -->
+            </mat-list-item>
+            <mat-list-item>
+              <label class="longlabelname">Comment</label>
+              <textarea matInput type="text"
+                        id="comment"
+                        class="form-control form-input"
+                        name="comment"
+                        placeholder=""
+                        [(ngModel)]="model.comment"
+                        #name="ngModel"
+                        rows="3"
+                        required>
+            </textarea>
+            </mat-list-item>
+          </mat-list>
+          <!--
+          <button type="submit" class="btn btn-info pull-right">
+            <i class="fa fa-envelope-o"></i>
+            <span> Save</span>
+          </button>
+          -->
+        </div>
+        <div class="float-none"></div>
+      </div>
+  </form>
+  <div class="modeltable">
+    <h3 class="float-left">Existing Models</h3>
+    <mat-form-field class="float-right">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <div>
+      <table mat-table class="modeltable bg-light mat-elevation-z8" [dataSource]="dataSource" matSort >
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+
+        <!-- Model Column -->
+        <ng-container matColumnDef="model">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Model </th>
+          <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+        </ng-container>
+
+        <!-- Manufacturer Column -->
+        <ng-container matColumnDef="manufacturer">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacturer </th>
+          <td mat-cell *matCellDef="let element"> {{element.manufacturer}} </td>
+        </ng-container>
+
+        <!--  Author Column -->
+        <ng-container matColumnDef="author">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Author </th>
+          <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+        </ng-container>
+
+        <!-- Version Column -->
+        <ng-container matColumnDef="version">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Version </th>
+          <td mat-cell *matCellDef="let element"> {{element.version}} </td>
+        </ng-container>
+
+
+        <!-- Power Consumption Column -->
+        <ng-container matColumnDef="powerConsumption">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Power Consumption </th>
+          <td mat-cell *matCellDef="let element"> {{element.powerConsumption}} </td>
+        </ng-container>
+
+        <!-- Ressource Consumption Column -->
+        <ng-container matColumnDef="ressourceConsumption">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Ressource Consumption </th>
+          <td mat-cell *matCellDef="let element"> {{element.ressourceConsumption}} </td>
+        </ng-container>
+
+        <!-- Comment Column -->
+        <ng-container matColumnDef="comment">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Comment </th>
+          <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button class="material-icons" (click)="deleteModel(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button class="material-icons" (click)="editModel(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+          <td>
+            <button></button>
+          </td>
+        </tr>
+      </table>
+      <mat-paginator class="bg-light" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>
+
+
+<!--
+
+<table>
+      <thead>
+      <tr>
+        <th>Type</th>
+        <th>Model</th>
+        <th>Manufacturer</th>
+        <th>Author</th>
+        <th>Version</th>
+        <th>Power Consumption</th>
+        <th>Ressource Consumption</th>
+        <th>Comment</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let field of fieldArray; let i = index">
+        <td class="a">
+          <input [(ngModel)]="field.channel" class="form-control" type="text" name="{{field.type}}" />
+        </td>
+        <td class="a">
+          <input [(ngModel)]="field.function" class="form-control" type="text" name="{{field.function}}" />
+        </td>
+        <td class="a">
+          <input [(ngModel)]="field.feature" class="form-control" type="text" name="{{field.feature}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.dmxValue" class="form-control" type="text" name="{{field.dmxValue}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.realValue" class="form-control" type="text" name="{{field.realValue}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.realValue" class="form-control" type="text" name="{{field.realValue}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.realValue" class="form-control" type="text" name="{{field.realValue}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.realValue" class="form-control" type="text" name="{{field.realValue}}" />
+        </td>
+        <td>
+          <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
+        </td>
+      </tr>
+      <tr style="height:2px;" >
+        <td>
+          <input  type="text" class="form-control"  id="newAttributechannel" [(ngModel)]="newAttribute.type" name="newAttributechannel" />
+        </td>
+        <td>
+          <input   width="12%" type="text" class="form-control" id="newAttributefunction" [(ngModel)]="newAttribute.model" name="newAttributefunction" />
+        </td>
+        <td>
+          <input  type="text" class="form-control" id="newAttributefeature" [(ngModel)]="newAttribute.manufacturer" name="newAttributefeature" />
+        </td>
+        <td>
+          <input type="text" class="form-control" id="newAttributedmxValue" [(ngModel)]="newAttribute.author" name="newAttributedmxValue" />
+        </td>
+        <td>
+          <input  type="text" class="form-control" id="newAttributerealValue" [(ngModel)]="newAttribute.version" name="newAttributerealValue" />
+        </td>
+        <td>
+          <input  type="text" class="form-control" id="newAttributerealValue" [(ngModel)]="newAttribute.powerConsumption" name="newAttributerealValue" />
+        </td>
+        <td>
+          <input  type="text" class="form-control" id="newAttributerealValue" [(ngModel)]="newAttribute.ressourceConsumption" name="newAttributerealValue" />
+        </td>
+        <td>
+          <input  type="text" class="form-control" id="newAttributerealValue" [(ngModel)]="newAttribute.comment" name="newAttributerealValue" />
+        </td>
+        <td>
+          <button class="btn btn-default" type="button" (click)="addFieldValue()">Edit</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+-->

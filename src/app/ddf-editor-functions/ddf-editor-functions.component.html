@@ -1,0 +1,77 @@
+<div class="function_selector">
+  <div class="content float-left">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Channel</th>
+        <th>Function</th>
+        <th>Feature</th>
+        <th>DMX Value</th>
+        <th>Real World</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let field of fieldArray; let i = index">
+        <td>
+          <input [(ngModel)]="field.channel" class="form-control" type="text" name="{{field.channel}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.function" class="form-control" type="text" name="{{field.function}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.feature" class="form-control" type="text" name="{{field.feature}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.dmxValue" class="form-control" type="text" name="{{field.dmxValue}}" />
+        </td>
+        <td>
+          <input [(ngModel)]="field.realValue" class="form-control" type="text" name="{{field.realValue}}" />
+        </td>
+        <td>
+          <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
+        </td>
+      </tr>
+      <tr style="height:2px;" >
+        <td>
+          <input  type="text" class="form-control"  id="newAttributechannel" [(ngModel)]="newAttribute.channel" name="newAttributechannel" />
+        </td>
+        <td>
+          <input  type="text" class="form-control" id="newAttributefunction" [(ngModel)]="newAttribute.function" name="newAttributefunction" />
+        </td>
+        <td>
+          <input  type="text" class="form-control" id="newAttributefeature" [(ngModel)]="newAttribute.feature" name="newAttributefeature" />
+        </td>
+        <td>
+          <input type="text" class="form-control" id="newAttributedmxValue" [(ngModel)]="newAttribute.dmxValue" name="newAttributedmxValue" />
+        </td>
+        <td>
+          <input  type="text" class="form-control" id="newAttributerealValue" [(ngModel)]="newAttribute.Attribute" name="newAttributerealValue" />
+        </td>
+        <td>
+          <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="content">
+    <mat-form-field>
+      <label>Function Selector</label>
+      <br>
+      <div class="selector">
+        <mat-select [(value)]="selected" [formControl]="functions" multiple >
+          <mat-option>None</mat-option>
+          <mat-option value="Strobe">Strobe</mat-option>
+          <mat-option value="Zoom">Zoom</mat-option>
+          <mat-option value="Focus">Focus</mat-option>
+        </mat-select>
+      </div>
+    </mat-form-field>
+    <p>You selected: {{selected}}</p>
+  </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,20 @@
+.content {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 79vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.table {
+  display: table;   /* Allow the centering to work */
+  margin: 0 auto;
+  width: 100%;
+}
+
+.rightside{
+  position: absolute;
+  right: 10px;
+  top:15px;
+}

@@ -1,0 +1,15 @@
+.table {
+  display: table;   /* Allow the centering to work */
+  margin: 0 auto;
+}
+
+ul {
+  min-width: 696px;
+  list-style: none;
+  padding-top: 20px;
+}
+ul li {
+  display: inline;
+  margin: 10px;
+}
+

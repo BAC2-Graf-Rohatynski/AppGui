@@ -1,0 +1,94 @@
+<div class="bg-light content border border-dark" >
+  <mat-toolbar class="navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <mat-toolbar-row>
+      <ul fxLayout fxLayoutGap="20px">
+        <li>
+          <a class="navbar-brand" href="#">
+            <span class="text-warning" style="font-size: 25px;">Manufacturer Creator</span>
+          </a>
+      </ul>
+      <div class="float-right">
+        <button  class="btn btn-info  bg-dark border-0" (click)="createManufacturer()" >
+          <i class="fa fa-envelope-o"></i>
+          <span> Save</span>
+        </button>
+        <button  class="btn btn-info  bg-dark border-0" (click)="closeManufacturer()" >
+          <i class="fa fa-envelope-o"></i>
+          <span>Close</span>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div style="padding-top:10px;">
+      <div style="height: 100px;">
+        <label>Manufacturer</label>
+        <input matInput type="text"
+               id="name"
+               class="form-control form-input"
+               name="name"
+               placeholder=""
+               [(ngModel)]="model.name"
+               #name="ngModel"
+               required/>
+      </div>
+    <div class="bg-light">
+      <h3 class="float-left">Existing Manufacturers</h3>
+      <mat-form-field class="float-right">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 bg-light">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button class="material-icons" (click)="deleteManufacturer(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button class="material-icons" (click)="editManufacturer(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator class="bg-light" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+  </div>
+  </div>
+</div>
+
+
+
+<!--
+
+<table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let manufacturer of manufacturers">
+        <td>{{ manufacturer.name}}</td>
+        <td width="50px;">
+          <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Edit</button>
+        </td>
+        <td width="50px;">
+          <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+-->
